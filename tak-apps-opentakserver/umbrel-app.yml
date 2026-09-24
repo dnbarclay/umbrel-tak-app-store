@@ -1,0 +1,29 @@
+manifestVersion: 1
+id: tak-apps-opentakserver
+name: OpenTAKServer
+tagline: A TAK server and live situational-awareness map
+icon: https://raw.githubusercontent.com/dnbarclay/umbrel-tak-app-store/main/tak-apps-opentakserver/icon.svg
+category: Networking
+version: "1.7.13"
+port: 8095
+description: >-
+  Host an OpenTAKServer on your Umbrel for ATAK, WinTAK, and iTAK clients.
+  Open the web dashboard to view connected users and live Cursor-on-Target data
+  on a map, manage users, and generate client connection packages.
+
+
+  Encrypted client traffic uses TCP port 8089 and certificate enrollment uses
+  TCP port 8446. Remote access requires appropriate VPN or router configuration.
+developer: OpenTAKServer contributors
+website: https://opentakserver.io
+submitter: dnbarclay
+submission: https://github.com/dnbarclay/umbrel-tak-app-store
+repo: https://github.com/dnbarclay/umbrel-tak-app-store
+support: https://github.com/dnbarclay/umbrel-tak-app-store/issues
+gallery: []
+releaseNotes: >-
+  Initial Umbrel community-store packaging of OpenTAKServer 1.7.13.
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""
