@@ -4,7 +4,7 @@ name: OpenTAKServer
 tagline: A TAK server and live situational-awareness map
 icon: https://raw.githubusercontent.com/dnbarclay/umbrel-tak-app-store/main/tak-apps-opentakserver/icon.svg
 category: Networking
-version: "1.7.13-umbrel.1"
+version: "1.7.13-umbrel.2"
 port: 8095
 description: >-
   Host an OpenTAKServer on your Umbrel for ATAK, WinTAK, and iTAK clients.
@@ -22,8 +22,8 @@ repo: https://github.com/dnbarclay/umbrel-tak-app-store
 support: https://github.com/dnbarclay/umbrel-tak-app-store/issues
 gallery: []
 releaseNotes: >-
-  Fixes installation by using the OpenTAKServer image tag currently published
-  by the upstream container registry.
+  Fixes OpenTAKServer startup by using the RabbitMQ management image required
+  by the upstream stack to initialize its message exchanges.
 dependencies: []
 path: ""
 defaultUsername: ""
