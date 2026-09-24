@@ -21,7 +21,8 @@ services:
       timeout: 5s
       retries: 10
 
-  rabbitmq:    # Match the upstream OpenTAKServer stack. The management build supplies the
+  rabbitmq:
+    # Match the upstream OpenTAKServer stack. The management build supplies the
     # broker capabilities used while OTS initializes its required exchanges.
     image: rabbitmq:3.13-management
     restart: on-failure
@@ -37,7 +38,7 @@ services:
       retries: 10
 
   server:
-    # Upstream currently publishes this multi-architecture image under `latest`.
+    # Upstream currently publishes this multi-architecture image under latest.
     # Its documented 1.7.13 tag returns HTTP 404 (manifest unknown) from GHCR.
     image: ghcr.io/9m2pju/9m2pju-opentakserver:latest
     restart: on-failure
@@ -55,7 +56,9 @@ services:
       OTS_LISTENER_PORT: 8081
       OTS_DATA_FOLDER: /data/ots
       OTS_CA_PASSWORD: "${APP_PASSWORD}"
-      OTS_CA_ORGANIZATION: Umbrel TAK
+      # OTS interpolates this value into an unquoted OpenSSL subject command.
+      # Keep it space-free so first-run CA generation succeeds.
+      OTS_CA_ORGANIZATION: UmbrelTAK
       OTS_CA_CITY: Local
       OTS_CA_STATE: Local
       OTS_CA_COUNTRY: US
