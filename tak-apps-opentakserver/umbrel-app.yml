@@ -4,7 +4,7 @@ name: OpenTAKServer
 tagline: A TAK server and live situational-awareness map
 icon: https://raw.githubusercontent.com/dnbarclay/umbrel-tak-app-store/main/tak-apps-opentakserver/icon.svg
 category: Networking
-version: "1.7.13-umbrel.3"
+version: "1.7.13-umbrel.4"
 port: 8095
 description: >-
   Host an OpenTAKServer on your Umbrel for ATAK, WinTAK, and iTAK clients.
@@ -12,8 +12,9 @@ description: >-
   on a map, manage users, and generate client connection packages.
 
 
-  Encrypted client traffic uses TCP port 8089 and certificate enrollment uses
-  TCP port 8446. Remote access requires appropriate VPN or router configuration.
+  Encrypted client traffic uses TCP port 8089, TAK package/API traffic uses
+  HTTPS port 8443, and certificate enrollment uses TCP port 8446. Remote access
+  requires appropriate VPN or router configuration.
 developer: OpenTAKServer contributors
 website: https://opentakserver.io
 submitter: dnbarclay
@@ -22,8 +23,8 @@ repo: https://github.com/dnbarclay/umbrel-tak-app-store
 support: https://github.com/dnbarclay/umbrel-tak-app-store/issues
 gallery: []
 releaseNotes: >-
-  Fixes first-run certificate authority generation by using a shell-safe CA
-  organization name, and retains the upstream RabbitMQ management image.
+  Publishes the TAK HTTPS API on port 8443 so ATAK can access server data
+  packages, while retaining the existing CoT and certificate-enrollment ports.
 dependencies: []
 path: ""
 defaultUsername: ""
