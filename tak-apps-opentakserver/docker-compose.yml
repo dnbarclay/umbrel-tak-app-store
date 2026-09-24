@@ -1,0 +1,70 @@
+version: "3.7"
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: tak-apps-opentakserver_server_1
+      APP_PORT: 8080
+
+  postgres:
+    image: postgres:16-alpine
+    restart: on-failure
+    environment:
+      POSTGRES_DB: ots
+      POSTGRES_USER: ots
+      POSTGRES_PASSWORD: "${APP_SEED}"
+    volumes:
+      - "${APP_DATA_DIR}/data/postgres:/var/lib/postgresql/data"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ots -d ots"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  rabbitmq:
+    image: rabbitmq:3.13-alpine
+    restart: on-failure
+    environment:
+      RABBITMQ_DEFAULT_USER: ots
+      RABBITMQ_DEFAULT_PASS: "${APP_SEED}"
+    volumes:
+      - "${APP_DATA_DIR}/data/rabbitmq:/var/lib/rabbitmq"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "check_running"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  server:
+    image: ghcr.io/9m2pju/9m2pju-opentakserver:1.7.13
+    restart: on-failure
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      SQLALCHEMY_DATABASE_URI: "postgresql+psycopg://ots:${APP_SEED}@postgres/ots"
+      OTS_RABBITMQ_SERVER_ADDRESS: rabbitmq
+      OTS_RABBITMQ_USERNAME: ots
+      OTS_RABBITMQ_PASSWORD: "${APP_SEED}"
+      OTS_LISTENER_ADDRESS: 0.0.0.0
+      OTS_LISTENER_PORT: 8081
+      OTS_DATA_FOLDER: /data/ots
+      OTS_CA_PASSWORD: "${APP_PASSWORD}"
+      OTS_CA_ORGANIZATION: Umbrel TAK
+      OTS_CA_CITY: Local
+      OTS_CA_STATE: Local
+      OTS_CA_COUNTRY: US
+      OTS_MEDIAMTX_ENABLE: "False"
+    volumes:
+      - "${APP_DATA_DIR}/data/ots:/data"
+    ports:
+      - "8089:8089"
+      - "8446:8446"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8080/ >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 5s
+      start_period: 90s
+      retries: 5
