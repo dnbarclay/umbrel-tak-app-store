@@ -36,7 +36,9 @@ services:
       retries: 10
 
   server:
-    image: ghcr.io/9m2pju/9m2pju-opentakserver:1.7.13
+    # Upstream currently publishes this multi-architecture image under `latest`.
+    # Its documented 1.7.13 tag returns HTTP 404 (manifest unknown) from GHCR.
+    image: ghcr.io/9m2pju/9m2pju-opentakserver:latest
     restart: on-failure
     depends_on:
       postgres:
