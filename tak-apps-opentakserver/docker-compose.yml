@@ -21,8 +21,9 @@ services:
       timeout: 5s
       retries: 10
 
-  rabbitmq:
-    image: rabbitmq:3.13-alpine
+  rabbitmq:    # Match the upstream OpenTAKServer stack. The management build supplies the
+    # broker capabilities used while OTS initializes its required exchanges.
+    image: rabbitmq:3.13-management
     restart: on-failure
     environment:
       RABBITMQ_DEFAULT_USER: ots
